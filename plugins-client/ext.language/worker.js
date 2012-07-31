@@ -366,7 +366,10 @@ function asyncParForEach(array, fn, callback) {
             
             // then invoke it and build an expression out of this
             if (handler && handler.length) {
-                var expression = handler[0].buildExpression(node);
+                var expression = {
+                    value: handler[0].buildExpression(node),
+                    pos: node.getPos()
+                };
                 this.scheduleEmit("inspect", expression);
             }
         }
