@@ -358,7 +358,9 @@ function asyncParForEach(array, fn, callback) {
             // find the current node based on the ast and the position data
             var ast = this.cachedAst;
             var node = ast.findNode({ line: event.data.row, col: event.data.col });
-            
+            if (!node)
+                this.scheduleEmit("inspect", {value: "", pos: {}});
+
             // find a handler that can build an expression for this language
             var handler = this.handlers.filter(function (h) { 
                 return h.handlesLanguage(_self.$language) && h.buildExpression;
